@@ -1,0 +1,15 @@
+.vscode/*
+checkpoints/*
+logs/*
+**/__pycache__/*
+**/*.tfrecord
+**/*.zip
+data/*/**/*.png
+data/*/**/*.jpg
+data/widerface/**/*.txt
+widerface_evaluate/*
+results/*
+normal
+normal.pdf
+reduction
+reduction.pdf

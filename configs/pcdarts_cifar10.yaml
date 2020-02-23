@@ -1,0 +1,30 @@
+# general setting
+batch_size: 96
+val_batch_size: 512
+input_size: 32
+init_channels: 36
+layers: 20
+num_classes: 10
+auxiliary_weight: 0.4
+drop_path_prob: 0.3
+arch: PCDARTS
+sub_name: 'pcdarts_cifar10'
+using_normalize: True
+
+# training dataset
+dataset_len: 50000  # number of training samples
+using_crop: True
+using_flip: True
+using_cutout: True
+cutout_length: 16
+
+# training setting
+epoch: 600
+init_lr: 0.025
+lr_min: 0.0
+momentum: 0.9
+weights_decay: !!float 3e-4
+grad_clip: 5.0
+
+val_steps: 520
+save_steps: 520
