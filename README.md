@@ -107,7 +107,7 @@ python train_search.py --cfg_path="./configs/pcdarts_cifar10_search.yaml" --gpu=
 
 Note:
 - The `--gpu` is used to choose the id of your avaliable GPU devices with `CUDA_VISIBLE_DEVICES` system varaible.
-- You can visualize the training status on tensorboard by running "`tensorboard --logdir=./logs/`". My logs can be found from [search_log](https://tensorboard.dev/experiment/g0J8bEmiRbSk6PyMiYTqCw/#scalars) and [full_train_log](https://tensorboard.dev/experiment/GkYEFbJPT9eG1GLH5jwa5A/#scalars).
+- You can visualize the training status on tensorboard by running "`tensorboard --logdir=./logs/`". My logs can be found from [search_log](https://tensorboard.dev/experiment/SWu96NYrSlyIk7VRmCqjgw/) and [full_train_log](https://tensorboard.dev/experiment/lyI64MKgRAODUqv3V4rzjg/).
 - You can visualize the learning rate scheduling by running "`python ./modules/lr_scheduler.py`".
 - You can visualize the dataset augmantation by running "`python ./dataset_checker.py`".
 
@@ -186,7 +186,7 @@ python test.py --cfg_path="./configs/pcdarts_cifar10.yaml" --gpu=0
 Note:
 - Above results are referenced from [official repository](https://github.com/yuhuixu1993/PC-DARTS) and [orignal paper](https://arxiv.org/abs/1907.05737).
 - There still have a slight performance gap between my PC-DARTS TF2 and official version. In both cases, we used Nvidia 1080ti (11G memory). My PC-DARTS TF2 pre-trained model can be found in [Models](#Models).
-- My tensorboard logs can be found from [search_log](https://tensorboard.dev/experiment/g0J8bEmiRbSk6PyMiYTqCw/#scalars) and [full_train_log](https://tensorboard.dev/experiment/GkYEFbJPT9eG1GLH5jwa5A/#scalars).
+- My tensorboard logs can be found from [search_log](https://tensorboard.dev/experiment/SWu96NYrSlyIk7VRmCqjgw/) and [full_train_log](https://tensorboard.dev/experiment/lyI64MKgRAODUqv3V4rzjg/).
 - If you get unsatisfactory results with the archecture searched by yourself, you might try to search it more than one time. (see the discussions [here](https://github.com/yuhuixu1993/PC-DARTS/issues/7))
 
 ****
