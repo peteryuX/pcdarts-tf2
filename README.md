@@ -1,5 +1,6 @@
 # [pcdarts-tf2](https://github.com/peteryuX/pcdarts-tf2)
 
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/peteryuX/pcdarts-tf2.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/peteryuX/pcdarts-tf2/context:python)
 ![Star](https://img.shields.io/github/stars/peteryuX/pcdarts-tf2)
 ![Fork](https://img.shields.io/github/forks/peteryuX/pcdarts-tf2)
 ![License](https://img.shields.io/github/license/peteryuX/pcdarts-tf2)
