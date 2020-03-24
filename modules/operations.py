@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import (Conv2D, SeparableConv2D, MaxPool2D,
-                                     AveragePooling2D, ReLU, Dropout)
+                                     AveragePooling2D, ReLU)
 
 
 OPS = {'none': lambda f, s, wd, affine: Zero(s),

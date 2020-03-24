@@ -1,5 +1,4 @@
 import tensorflow as tf
-import math
 
 
 def MultiStepLR(initial_learning_rate, lr_steps, lr_rate, name='MultiStepLR'):

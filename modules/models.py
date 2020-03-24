@@ -1,8 +1,7 @@
-import functools
 import tensorflow as tf
 from absl import logging
 from tensorflow.keras import Model, Sequential
-from tensorflow.keras.layers import (Input, Dense, Flatten, Dropout, Conv2D,
+from tensorflow.keras.layers import (Input, Dense, Flatten, Conv2D,
                                      AveragePooling2D, GlobalAveragePooling2D,
                                      ReLU)
 from modules.operations import (OPS, FactorizedReduce, ReLUConvBN,

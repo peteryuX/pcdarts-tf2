@@ -1,13 +1,10 @@
-import functools
 import tensorflow as tf
 from absl import logging
 from tensorflow.keras import Model, Sequential
-from tensorflow.keras.layers import (Input, Dense, Flatten, Dropout, Conv2D,
-                                     MaxPool2D, GlobalAveragePooling2D,
-                                     ReLU, Softmax)
+from tensorflow.keras.layers import (Input, Dense, Flatten, Conv2D, MaxPool2D,
+                                     GlobalAveragePooling2D, Softmax)
 from modules.operations import (OPS, FactorizedReduce, ReLUConvBN,
-                                BatchNormalization, Identity, drop_path,
-                                kernel_init, regularizer)
+                                BatchNormalization, kernel_init, regularizer)
 from modules.genotypes import PRIMITIVES, Genotype
 
 

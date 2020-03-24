@@ -1,7 +1,4 @@
 import cv2
-import numpy as np
-import tensorflow as tf
-import tensorflow_datasets as tfds
 from modules.utils import set_memory_growth
 from modules.dataset import load_cifar10_dataset
 

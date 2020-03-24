@@ -1,4 +1,3 @@
-import cv2
 import yaml
 import sys
 import time
