@@ -204,6 +204,7 @@ Dowload these models bellow, then extract them into `./checkpoints/` for restori
 
 Note:
 - You can find the training settings of the models in the corresponding [./configs/*.yaml](https://github.com/peteryuX/pcdarts-tf2/tree/master/configs) files, and make sure that the `arch` flag in it is matched with the genotypes name in [./modules/genotypes.py](https://github.com/peteryuX/pcdarts-tf2/tree/master/modules/genotypes.py).
+- **Based on the property of the training dataset, all the pre-trained models can only be used for non-commercial applications.**
 
 ****
 
