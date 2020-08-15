@@ -151,7 +151,7 @@ def main(_):
 
     # Start sampling for 50 archs
     for geno_num in range(50):
-        genotype = sna.get_genotype()
+        genotype = sna.get_genotype(random_search_flag=True)
         prog_bar.update(f"\n Sampled{geno_num}th arch: {genotype}")
         # print(f"\n Sampled {geno_num}th arch: {genotype}")
         f = open(os.path.join(

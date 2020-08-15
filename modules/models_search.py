@@ -113,7 +113,7 @@ class SplitSoftmax(tf.keras.layers.Layer):
 class SearchNetArch(object):
     """Search Network Architecture"""
     def __init__(self, cfg, steps=4, multiplier=4, stem_multiplier=3,
-                 name='SearchModel', random_search_flag = False):
+                 name='SearchModel'):
         self.cfg = cfg
         self.steps = steps
         self.multiplier = multiplier
@@ -122,7 +122,7 @@ class SearchNetArch(object):
 
         self.arch_parameters = self._initialize_alphas()
         self.model = self._build_model()
-        self._random_search_flag = random_search_flag
+        # self._random_search_flag = random_search_flag
 
     def _initialize_alphas(self):
         k = sum(range(2, 2 + self.steps))
@@ -205,7 +205,7 @@ class SearchNetArch(object):
             (inputs, alphas_normal, alphas_reduce, betas_normal, betas_reduce),
             logits, name=self.name)
 
-    def get_genotype(self):
+    def get_genotype(self, random_search_flag=False):
         """get genotype"""
         def _parse(weights, edge_weights,random_search_flag=False):
             n = 2
@@ -251,11 +251,11 @@ class SearchNetArch(object):
         gene_reduce = _parse(
             Softmax()(self.alphas_reduce).numpy(),
             SplitSoftmax(range(2, 2 + self.steps))(self.betas_reduce).numpy(),
-            random_search_flag=self._random_search_flag)
+            random_search_flag=random_search_flag)
         gene_normal = _parse(
             Softmax()(self.alphas_normal).numpy(),
             SplitSoftmax(range(2, 2 + self.steps))(self.betas_normal).numpy(),
-            random_search_flag=self._random_search_flag)
+            random_search_flag=random_search_flag)
 
         concat = range(2 + self.steps - self.multiplier, self.steps + 2)
         genotype = Genotype(normal=gene_normal, normal_concat=concat,
