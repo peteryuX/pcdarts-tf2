@@ -8,7 +8,7 @@ from modules.operations import (OPS, FactorizedReduce, ReLUConvBN,
                                 BatchNormalization, Identity, drop_path,
                                 kernel_init, regularizer)
 import modules.genotypes as genotypes
-
+import modules.search_random_arch_genotype as search_random_arch_genotype
 
 class Cell(tf.keras.layers.Layer):
     """Cell Layer"""
@@ -94,7 +94,7 @@ class AuxiliaryHeadCIFAR(tf.keras.layers.Layer):
         return x
 
 
-def CifarModel(cfg, training=True, stem_multiplier=3, name='CifarModel'):
+def CifarModel(cfg, training=True, stem_multiplier=3, name='CifarModel',file_name="genotypes"):
     """Cifar Model"""
     logging.info(f"buliding {name}...")
 
@@ -103,7 +103,7 @@ def CifarModel(cfg, training=True, stem_multiplier=3, name='CifarModel'):
     layers = cfg['layers']
     num_cls = cfg['num_classes']
     wd = cfg['weights_decay']
-    genotype = eval("genotypes.%s" % cfg['arch'])
+    genotype = eval(f"{file_name}.%s" % cfg['arch'])
 
     # define model
     inputs = Input([input_size, input_size, 3], name='input_image')

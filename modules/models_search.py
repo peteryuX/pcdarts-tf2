@@ -231,7 +231,8 @@ class SearchNetArch(object):
                     # Randomly set the edges so that it could get the genotype
                     rng = np.random.default_rng()
                     # TODO : release the constraint of only two precedents
-                    edges = rng.choice(range(i+1),2,replace = False) 
+                    edges = rng.choice(range(i+1),2)
+                    # print(f"edges = {edges}")
 
                 # pick the top best op, and append into genotype.
                 # This is used to avoid the none edges
@@ -245,7 +246,7 @@ class SearchNetArch(object):
 
                 start = end
                 n += 1
-         
+            # print(f'gene is {gene}')
             return gene
 
         gene_reduce = _parse(

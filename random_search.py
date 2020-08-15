@@ -1,9 +1,10 @@
+from modules.operations import drop_path
 from modules.genotypes import Genotype
 from absl import app, flags, logging
 from absl.flags import FLAGS
 import os
 import tensorflow as tf
-
+import pandas as pd
 from modules.models_search import SearchNetArch
 from modules.dataset import load_cifar10_dataset
 from modules.lr_scheduler import CosineAnnealingLR
@@ -11,7 +12,7 @@ from modules.losses import CrossEntropyLoss
 from modules.utils import (
     set_memory_growth, load_yaml, count_parameters_in_MB, ProgressBar,
     AvgrageMeter, accuracy)
-
+import debugpy
 
 flags.DEFINE_string('cfg_path', './configs/pcdarts_cifar10_search.yaml',
                     'config file path')
@@ -123,26 +124,8 @@ def main(_):
 
         return losses
 
-    # training loop
     summary_writer = tf.summary.create_file_writer('./logs/' + cfg['sub_name'])
-    total_steps = steps_per_epoch * cfg['epoch']
-    # remain_steps = max(total_steps - checkpoint.step.numpy(), 0)
-    
-    remain_steps = 1
 
-
-
-    train_acc = AvgrageMeter()
-
-
-    # Train one epoch
-    checkpoint.step.assign_add(1)
-    inputs , labels = train_dataset.take(1)
-
-    logits, total_loss, losses = train_step(inputs, labels)
-    train_acc.update(
-            accuracy(logits.numpy(), labels.numpy())[0], cfg['batch_size'])
-    
     print("[*] finished searching for one epoch")
 
     print("[*] Start sampling architetures")
@@ -160,6 +143,29 @@ def main(_):
         f.close()
 
     print("Sampling done!")
+    debugpy.wait_for_client()
+    # # Begin training for 20 epochs for the 50 arch
+    # for arch_num in range(50):
+    #     cfg['genotype'] = 1
+
+    # total_steps = steps_per_epoch * cfg['epoch']
+    # remain_steps = max(total_steps - checkpoint.step.numpy(), 0 )
+    # prog_bar = ProgressBar(steps_per_epoch,
+    #                         checkpoint.step.numpy() % steps_per_epoch)
+    # train_acc = AvgrageMeter()
+    # val_acc = AvgrageMeter()
+    # best_acc = 0.
+    # for inputs, labels in train_dataset.take(remain_steps):
+    #     checkpoint.step.assign_add(1)
+    #     drop_path_prob = cfg['drop_path_prob'] * (
+    #         tf.cast(checkpoint.step, tf.float32) / total_steps)
+    #     steps = checkpoint.step.numpy()
+
+
+
+    # Select FSP
+
+    # test for the best arch
 
     
 #     for inputs, labels in train_dataset.take(remain_steps): # Take only one epoch for training
