@@ -14,7 +14,7 @@ def plot(genotype, filename):
 
     g.node("c_{k-2}", fillcolor='darkseagreen2')
     g.node("c_{k-1}", fillcolor='darkseagreen2')
-    assert len(genotype) % 2 == 0
+    assert len(genotype) % 2 == 0 # TODO : If release the constraint of only 2 precedent, this assertion should be modified
     steps = len(genotype) // 2
 
     for i in range(steps):
@@ -45,6 +45,8 @@ if __name__ == '__main__':
         sys.exit(1)
 
     genotype_name = sys.argv[1]
+
+    print(genotype_name)
     try:
         genotype = eval('genotypes.{}'.format(genotype_name))
     except AttributeError:

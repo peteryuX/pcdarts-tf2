@@ -1,4 +1,7 @@
+from os import replace
 import tensorflow as tf
+import numpy as np
+
 from absl import logging
 from tensorflow.keras import Model, Sequential
 from tensorflow.keras.layers import (Input, Dense, Flatten, Conv2D, MaxPool2D,
@@ -110,7 +113,7 @@ class SplitSoftmax(tf.keras.layers.Layer):
 class SearchNetArch(object):
     """Search Network Architecture"""
     def __init__(self, cfg, steps=4, multiplier=4, stem_multiplier=3,
-                 name='SearchModel'):
+                 name='SearchModel', random_search_flag = False):
         self.cfg = cfg
         self.steps = steps
         self.multiplier = multiplier
@@ -119,6 +122,7 @@ class SearchNetArch(object):
 
         self.arch_parameters = self._initialize_alphas()
         self.model = self._build_model()
+        self._random_search_flag = random_search_flag
 
     def _initialize_alphas(self):
         k = sum(range(2, 2 + self.steps))
@@ -203,7 +207,7 @@ class SearchNetArch(object):
 
     def get_genotype(self):
         """get genotype"""
-        def _parse(weights, edge_weights):
+        def _parse(weights, edge_weights,random_search_flag=False):
             n = 2
             start = 0
             gene = []
@@ -216,14 +220,21 @@ class SearchNetArch(object):
                 for j in range(n):
                     w[j, :] = w[j, :] * ew[j]
 
+                if random_search_flag==False:
                 # pick the top 2 edges (k = 2).
-                edges = sorted(
-                    range(i + 2),
-                    key=lambda x: -max(w[x][k] for k in range(len(w[x]))
-                                       if k != PRIMITIVES.index('none'))
-                    )[:2]
+                    edges = sorted(
+                        range(i + 2),
+                        key=lambda x: -max(w[x][k] for k in range(len(w[x]))
+                                        if k != PRIMITIVES.index('none'))
+                        )[:2]
+                else:
+                    # Randomly set the edges so that it could get the genotype
+                    rng = np.random.default_rng()
+                    # TODO : release the constraint of only two precedents
+                    edges = rng.choice(range(i+1),2,replace = False) 
 
                 # pick the top best op, and append into genotype.
+                # This is used to avoid the none edges
                 for j in edges:
                     k_best = None
                     for k in range(len(w[j])):
@@ -234,15 +245,17 @@ class SearchNetArch(object):
 
                 start = end
                 n += 1
-
+         
             return gene
 
         gene_reduce = _parse(
             Softmax()(self.alphas_reduce).numpy(),
-            SplitSoftmax(range(2, 2 + self.steps))(self.betas_reduce).numpy())
+            SplitSoftmax(range(2, 2 + self.steps))(self.betas_reduce).numpy(),
+            random_search_flag=self._random_search_flag)
         gene_normal = _parse(
             Softmax()(self.alphas_normal).numpy(),
-            SplitSoftmax(range(2, 2 + self.steps))(self.betas_normal).numpy())
+            SplitSoftmax(range(2, 2 + self.steps))(self.betas_normal).numpy(),
+            random_search_flag=self._random_search_flag)
 
         concat = range(2 + self.steps - self.multiplier, self.steps + 2)
         genotype = Genotype(normal=gene_normal, normal_concat=concat,
