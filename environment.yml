@@ -6,7 +6,7 @@ dependencies:
   - python==3.7
   - pip
   - pip:
-    - tensorflow-gpu==2.1.0
+    - tensorflow-gpu
     - tensorflow_datasets
     - numpy
     - opencv-python

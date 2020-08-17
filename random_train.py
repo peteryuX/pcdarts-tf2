@@ -95,7 +95,7 @@ def main(_):
         criterion = CrossEntropyLoss()
 
         # load checkpoint
-        checkpoint_dir = './checkpoints/' + cfg['sub_name']
+        checkpoint_dir = './checkpoints/' + arch
         checkpoint = tf.train.Checkpoint(step=tf.Variable(0, name='step'),
                                         optimizer=optimizer,
                                         model=model)
